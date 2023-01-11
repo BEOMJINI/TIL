@@ -1,18 +1,20 @@
 package RPG;
 
-public class Monster_bat extends Monster_type {
+import java.util.Random;
+
+public class Monster_bat extends Monster {
 
 	public Monster_bat() {
 		super("박쥐", 100, 30, 5);
 		// TODO Auto-generated constructor stub
-		
+		this.type = rdType();
 	}
 
-	@Override
-	public String toString() {
-		return name + " hp : " + hp + "/" + max_hp + " mp : " + mp + "/" + max_mp + " type : " + type + " strength : "
-				+ strength;
-	}
+//	@Override
+//	public String toString() {
+//		return name + " hp : " + hp + "/" + max_hp + " mp : " + mp + "/" + max_mp + " type : " + type + " strength : "
+//				+ strength;
+//	}
 
 	@Override
 	void skill(Unit u) {
@@ -32,5 +34,20 @@ public class Monster_bat extends Monster_type {
 		System.out.println(this);
 		System.out.println(u);
 	}
+
+//	@Override
+//	String rdType() {
+//		Random rd = new Random();
+//		String typeName="";
+//		int rdType = rd.nextInt(3);
+//		if(rdType == 0) {
+//			typeName = "Fire";
+//		}else if(rdType == 1) {
+//			typeName = "Water";
+//		}else  {
+//			typeName = "Grass";
+//		}
+//		return typeName;
+//	}
 
 }
