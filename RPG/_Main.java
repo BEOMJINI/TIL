@@ -8,16 +8,21 @@ public class _Main {
 		Monster_wolf w = new Monster_wolf();
 		b.skill(w);
 		w.skill(b);
+		
 		System.out.println("_____________________");
 		b.skill(w);
 		w.skill(b);
+		
 		System.out.println("_____________________");
 		b.skill(w);
 		w.skill(b);
+		
 		System.out.println("_____________________");
 		b.attack(w);
 		w.attack(b);
 		
+		Player p = new Player_mage();
+		p.attack(w);
 	}
 
 }
