@@ -1,10 +1,10 @@
 package RPG2;
 
 public class Mage extends Player {
-	int po = 0;
+	//int po = 0;
 
 	public Mage() {
-		super(10, 50, "마법사", 10);
+		super(50, 50, "마법사", 10);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -14,8 +14,8 @@ public class Mage extends Player {
 		int power = 20;
 		int useMp = 10;
 
-		if (this.mp <= useMp) {
-			System.err.println("MP 부족 !");
+		if (this.mp < useMp) {
+			System.err.println(this.name+ "MP 부족 !");
 			return;
 		}
 		System.out.println(
@@ -31,7 +31,7 @@ public class Mage extends Player {
 	}
 
 	@Override
-	public void healSkill(Player p) {
+	public void healSkill(Unit u) {
 	}
 
 }

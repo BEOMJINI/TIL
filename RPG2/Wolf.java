@@ -3,7 +3,7 @@ package RPG2;
 public class Wolf extends Monster {
 
 	public Wolf() {
-		super(120, 10, "늑대", 15);
+		super(30, 10, "늑대", 15);
 		// TODO Auto-generated constructor stub
 
 	}
@@ -19,7 +19,7 @@ public class Wolf extends Monster {
 		int useMp = 10;
 
 		if (this.mp < useMp) {
-			System.err.println("MP 부족 !");
+			System.err.println(this.name+ "MP 부족 !");
 			return;
 		}
 		System.out.println(this.name + " 스킬 " + name + "\n" + "힘 2배 증가" + "\n" + +buff + " 힘");
@@ -29,7 +29,7 @@ public class Wolf extends Monster {
 	}
 
 	@Override
-	public void healSkill(Player p) {
+	public void healSkill(Unit u) {
 	}
 
 }
