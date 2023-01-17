@@ -20,15 +20,22 @@ abstract public class Unit {
 	}
 
 	public void attack(Unit u) {
-		u.hp -= this.strength;
-		System.out.printf("%s 가 %s 를 공격\n%d의 데미지 \n", this.name, u.name, this.strength);
-		if (u.hp <= 0) {
-			u.hp = 0;
-			u.isDead = true;
-			System.out.println(u.name + " 사망");
-		}
+
+//		if (u.isDead == true) {
+//			System.out.println("대상은 이미 사망한 상태입니다!");
+//			return;
+//		} else {
+			u.hp -= this.strength;
+			System.out.printf("%s 가 %s 를 공격\n%d 의 데미지 \n", this.name, u.name, this.strength);
+			if (u.hp <= 0) {
+				u.hp = 0;
+				u.isDead = true;
+				System.out.println(u.name + " 사망");
+			}
+
+//		}
 	}
-	
+
 	public void useSkill(Unit u) {
 		this.skill.skill(u);
 	}

@@ -6,6 +6,7 @@ public class StageBattle implements Stage {
 	public void init() {
 		// TODO Auto-generated method stub
 		// GameDAO.instance.stageList.put(null, null);
+		UnitManager.instance.setPlayer();
 		while (true) {
 			System.out.println("\n____[ Dungeon ]____");
 			System.out.println("[0]뒤로가기 [1]숲 [2]바다");
