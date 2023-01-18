@@ -7,6 +7,7 @@ public class StageForest implements Stage{
 		// player set , stagebattle 에서
 		// 숲 몬스터 set 
 		UnitManager.instance.setForestMonster();
+		System.out.println("[숲 던전에 입장했습니다.]");
 	}
 
 	@Override

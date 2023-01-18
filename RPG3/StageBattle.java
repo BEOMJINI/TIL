@@ -7,6 +7,12 @@ public class StageBattle implements Stage {
 		// TODO Auto-generated method stub
 		// GameDAO.instance.stageList.put(null, null);
 		UnitManager.instance.setPlayer();
+		
+	}
+
+	@Override
+	public void setting() {
+		// TODO Auto-generated method stub
 		while (true) {
 			System.out.println("\n____[ Dungeon ]____");
 			System.out.println("[0]뒤로가기 [1]숲 [2]바다");
@@ -19,12 +25,6 @@ public class StageBattle implements Stage {
 				GameDAO.instance.changeStage("Ocean");
 			}
 		}
-	}
-
-	@Override
-	public void setting() {
-		// TODO Auto-generated method stub
-
 	}
 
 }
