@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        div{
+            border: 1px solid black;
+        }
+
+        
+
+        .grid{
+            display: grid;
+            /* vh-> view height : body 전체 영역 0~100%*/
+            height: 100vh;
+            /* auto -> 기본값 200px */
+            /* grid-template-columns: repeat(3,auto),200px;
+            grid-template-rows: 100px repeat(2,200px) 100px;
+            grid-template-areas: 
+            "header header header header"
+            "content content content nav"
+            "content content content nav"
+            "footer footer footer footer"
+            ; */
+
+            grid-template: 
+            "header header header header" 1fr
+            "content content content nav" 4fr
+            "footer footer footer footer" 1fr
+            ;
+        }
+        .header{
+            background-color: palegoldenrod;
+            grid-area: header;
+        }
+        .content{
+            background-color: aliceblue ;
+            grid-area: content;
+        }
+        .nav{
+            background-color: aqua;
+            grid-area: nav;
+        }
+        .footer{
+            background-color: blueviolet;
+            grid-area: footer;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid">
+        <div class="header">h</div>
+        <div class="content">c</div>
+        <div class="nav">n</div>
+        <div class="footer">f</div>
+    </div>
+</body>
+</html>
