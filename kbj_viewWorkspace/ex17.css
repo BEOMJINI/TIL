@@ -1,0 +1,118 @@
+*{
+    box-sizing: border-box;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title{
+    font-weight: 600;
+    font-size: 22px;
+    text-align: center;
+    margin: 30px 0;
+
+}
+
+.box{
+    width: 600px;
+    height: 120px;
+    margin: 0 20px;
+    text-align: center;
+    background-image: linear-gradient(to left, green, red);
+    background-color: pink;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.box span{
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+    
+}
+
+.translateY:hover span{
+    -webkit-transform: translateY(50px);
+    transform: translateY(50px);
+}
+
+.text1{
+    transition: all 0.4s ease-in-out;
+}
+
+.text2{
+                                 /* 딜레이 */
+    transition: all 0.4s ease-in-out 0.1s;
+}
+.text3{
+    transition: all 0.4s ease-in-out 0.2s;
+}
+.text4{
+    transition: all 0.4s ease-in-out 0.3s;
+}
+.text5{
+    transition: all 0.4s ease-in-out 0.4s;
+}
+.text6{
+    transition: all 0.4s ease-in-out 0.5s;
+}
+.text7{
+    transition: all 0.4s ease-in-out 0.6s;
+}
+.text8{
+    transition: all 0.4s ease-in-out 0.7s;
+}
+.text9{
+    transition: all 0.4s ease-in-out 0.8s;
+}
+
+/* transition -> 이벤트가 있어야 작동 , 그냥은 작동안함 */
+.box:hover span{
+    transform: translateY(-20px);
+}
+/* 폰트 어썸에서 받은 아이콘은 css 에서 svg 태그 사용 */
+.heart svg{
+    width: 42px;
+    height: 42px;
+    color: red;
+    animation: heartBeat 1s ease-in-out infinite;
+}
+/* keyframes -> 화면 키자마자 실행하기 */
+@keyframes heartBeat{
+    0%{
+        transform: scale(1.2);
+    }
+    70%{
+        transform: scale(1);
+    }
+    100%{
+        transform: scale(1.2);
+    }
+}
+
+.star svg{
+    width: 50px;
+    height: 50px;
+    color: yellow;
+   
+}
+
+.loading svg{
+    width: 50px;
+    height: 50px;
+    color: darkorchid;
+}
+
+.tomato svg{
+    width: 50px;
+    height: 50px;
+    color: red;
+}
+

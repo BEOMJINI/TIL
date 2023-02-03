@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--@media 사용하려면 meta name="viewport" 필요함-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sassy+Frass&display=swap');
+    </style>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            /* font-family: Sassy Frass; */
+        }
+
+        div {
+            outline: 7px solid aqua;
+            font-size: 30px;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+
+
+        }
+
+
+
+        .grid {
+            display: grid;
+            height: 100vh;
+            grid-template:
+                "a a a a" 0.5fr
+                "b c c c" 5fr
+                /* "d d d d" 1fr; */
+                /*row size / column size  동시에 쓰기가능*/
+                "d d d d" 100px / 1fr 1fr 1fr 1fr
+        }
+
+        .a {
+            background-color: pink;
+            grid-area: a;
+            /* text-align: center; */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
+
+        .b {
+            background-color: rgb(76, 127, 185);
+            grid-area: b;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+
+        }
+
+        .c {
+            background-color: rgb(117, 204, 66);
+            grid-area: c;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
+
+        .d {
+            background-color: rgb(190, 184, 97);
+            grid-area: d;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
+    </style>
+    <style>
+        @media screen and (max-width: 600px) {
+            .grid {
+                display: grid;
+                height: 100vh;
+                grid-template:
+                    "a" 2fr
+                    "b" 1fr
+                    "c" 3fr
+                    "d" 3fr
+                ;
+            }
+
+            div {
+                font-size: 90px;
+                font-weight: bold;
+            }
+
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="grid">
+        <div class="a">header</div>
+        <div class="b">nav</div>
+        <div class="c">main</div>
+        <div class="d">footer</div>
+
+    </div>
+</body>
+
+</html>

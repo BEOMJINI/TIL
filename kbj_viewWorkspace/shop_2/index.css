@@ -1,0 +1,94 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html,body{
+    height: 100%;
+
+}
+.mainBanner{
+    height: 30%;
+    /* 해당 요소 안에 백그라운드 채워진다 */
+    background-image: url(./img/banner.jpg);
+    background-size: cover;
+    /* background-color: pink; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin-bottom: 10px;
+}
+.mainBanner .text{
+    font-size: 48px;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+.container{
+
+    height: 30%;
+    /* 늘어는 값 맥스 정할 수 있다 */
+    max-width: 1320px;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.sidebar{
+    width: 170px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 10px;
+}
+
+.sidebar ul{
+    width: 100%;
+    background-color: orange;
+}
+
+.sidebar ul li{
+    list-style: none;
+    color: white;
+    padding: 5px 0;
+    border-bottom: 1px dashed rgba(255,255,255,0.3);
+    text-align: center;
+}
+.writeBntBox{
+    margin-top: 10px;
+    width: 100%;
+    background-color: aquamarine;
+}
+.writeBtn{
+    display: block;
+    background-color: #000000;
+    width: 100%;
+    color: white;
+    padding: 10px 20px;
+}
+
+.contents{
+
+/* 방법1 한쪽은 고정값 다른쪽은 flex-grow 1 부모영역까지 채워준다 */
+/* flex-grow: 1; */
+/* width: 100%; */
+/* 전체 영역에서 사이드바 만큼 뺀것을 아이템 영역으로 하겠다  */
+width: calc( 100% - 170px );
+display: flex;
+flex-direction: row;
+/* justify-content: space-between; */
+/* align-items: flex-start; */
+   /* 이렇게 되면 이미지가 다 깨져서 item 다음줄로 */
+flex-wrap: wrap;
+padding: 0 10px;
+}
+
+.item{
+    width: calc(25% - 10px);
+    height: 180px;
+    background-image: url(./img/item1.jpeg);
+    background-size: cover;
+    /* background-color: green; */
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+}
