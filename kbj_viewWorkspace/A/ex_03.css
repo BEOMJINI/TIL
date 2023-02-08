@@ -1,0 +1,78 @@
+h2 {
+    color: red;
+}
+
+.coding {
+    color: green;
+}
+
+#coding {
+    color: yellow;
+}
+
+header>h3 {
+    color: blue;
+}
+
+header>p {
+    color: red
+}
+
+footer>h3 {
+    color: black;
+}
+
+footer>p {
+    color: green
+}
+
+/*
+.paragraph{
+    color: black;
+    background-color: green;
+    font-size: 50;
+    font-weight: bold;
+    font-style: italic;
+    width: 500px;
+    height: 500px;
+    font-family: Times, Arial, sans-serif;
+}
+*/
+h4 {
+    color: black;
+    font-size: 50px;
+    font-style: italic;
+    font-family: Times;
+    background-color: yellow;
+    background-image: url(ttt.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 30%;
+    border-color: red;
+    border-style: solid;
+    border-width: 2px;
+    width: 500px;
+    height: 500px;
+}
+
+div {
+    width: 100px;
+    height: 100px;
+    border: 1px dotted blue;
+    padding: 10px;
+    background-color: pink;
+    margin: 0px 0px 20px 50px;
+        /* 위 오른쪽 아래 왼쪽 : 시계방향*/
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.box1 {
+    /* box-sizing: content-box; */
+}
+
+.box3 {
+    /* box-sizing: border-box; */
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 800px;
+            height: 800px;
+        }
+
+        ul {
+            display: grid;
+            height: 100%;
+
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-areas:
+                "a a a"
+                "b . ."
+                "c d e"
+            ;
+            
+            /* items : grid 한 영역 안에서의 자식 배치 
+            content : grid 컨테이너 안에서 자식들의 배치 -> 부모공간이 자식보다 커야지만 작동
+            */
+        }
+
+        .item {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: pink;
+            border: 1px solid salmon;
+        }
+
+        .container :nth-child(2n) {
+            background-color: lightblue;
+            border: 1px solid cadetblue;
+        }
+
+        li:nth-child(1) {
+            grid-area: a;
+            justify-self: end;
+            /* justify : x축 이동 */
+        }
+
+        li:nth-child(2) {
+            grid-area: b;
+            align-self: end;
+            /* align : y축 이동 */
+        }
+
+        li:nth-child(3) {
+            grid-area: c;
+        }
+
+        li:nth-child(4) {
+            grid-area: d;
+        }
+
+        li:nth-child(5) {
+            grid-area: e;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <ul class="gridContainer">
+            <li class="item">1</li>
+            <li class="item">2</li>
+            <li class="item">3</li>
+            <li class="item">4</li>
+            <li class="item">5</li>
+        </ul>
+    </div>
+</body>
+
+</html>

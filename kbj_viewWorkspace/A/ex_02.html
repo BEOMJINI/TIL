@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .li1{color: red;} /* 모든 클래스 이름이 li1과 같으면 red */
+        ul li{color: green;} /* ul tag 안에 모든 li tag는 green */
+        ul>.li4{color: orange;} /* ul 자식 tag 중에 class이름이 li4 tag는 orange */
+        .li1 +.li2{color: blue;} /* class li1과 class li2 사이에 인접(위아래) class는 blue */
+        .li1 ~.li5{color: violet} /* class li1 ~ li5 사이 모든 형제 tag violet*/
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li class="li1">홈</li>
+            <li class="li2">로그인</li>
+            <li class="li3">회원가입</li>
+            <li class="li4">게시판</li>
+            <li class="li5">질의응답</li>
+        </ul>
+    </nav>
+</body>
+</html>

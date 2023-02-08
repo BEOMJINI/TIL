@@ -1,0 +1,110 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* div{
+    background-color: aliceblue;
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(2,1fr 200px);
+    grid-template: "h1 one two three" 1fr 1fr 1fr 1fr;
+} */
+
+/* .container{
+    background-color: antiquewhite;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(2,1fr 200px);
+    grid-template: "h1 one two three" 3fr 1fr 1fr 1fr;
+} */
+
+header{
+    /* background-color: aquamarine; */
+    /* display: grid; */
+    /* grid-template-columns: "one two three" 1fr 1fr 1fr; */
+    /* grid-area: head; */
+    display: flex;
+    flex-direction: row;
+    /* justify-content: left; */
+}
+
+h1{
+    background-color: whitesmoke;
+    /* display: block; */
+    grid-area: h1;
+    display: flex;
+    flex-direction: column;
+    height: 50px;
+    justify-content: center;
+    width: 70%;
+    padding-left: 20px;
+}
+
+h1 a{
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+nav{
+    /* background-color: azure; */
+    display: flex;
+    /* grid-template-columns: repeat(3,1fr); */
+    flex-direction: row;
+    width: 60%;
+    /* justify-content: center; */
+    /* align-content: center; */
+}
+
+ul{
+    /* background-color: bisque; */
+    display: flex;
+    flex-direction: row;
+    /* justify-content: right; */
+    width: 100%;
+    /* justify-content: center; */
+    /* align-content: center; */
+}
+
+li{
+    /* background-color: lightcoral; */
+    /* grid-template: "one two three" 1fr 1fr 1fr; */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+}
+
+nav a{
+    color: black;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.one{
+    background-color: rgba(177, 197, 219, 0.336);
+    grid-area: one;
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* justify-content: center; */
+    /* align-content: center; */
+    /* text-align: center; */
+}
+.two{
+    background-color: rgba(177, 197, 219, 0.63);
+    grid-area: two;
+    /* justify-content: center; */
+    /* align-content: center; */
+}
+.three{
+    background-color: rgba(177, 197, 219, 0.836);
+    grid-area: three;
+}
+
+a{
+    text-decoration: none;
+}

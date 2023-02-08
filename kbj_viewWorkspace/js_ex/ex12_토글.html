@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .trans{
+            width: 200px;
+            height: 200px;
+            background-color: palegoldenrod;
+            position: absolute;
+            left: -200px;  /*화면밖으로 빼고 */
+            top: 100px;
+            transition: all 0.5s;   /* 모든 액션 0.5초 걸려 실행 */
+            transform: scale(0);
+        }
+        .trans.active{
+            background-color: lightcoral;
+            left: 0;    /* active로 다시 땡겨오기해볼거 */
+            transform: scale(1);
+        }
+        
+
+
+    </style>
+</head>
+<body>
+    <div class="trans">
+
+
+    </div>
+    <button> 토글</button>
+<!--  -->
+    <script>
+        let toggle = false;
+        let btn =document.querySelector('button');
+        btn.addEventListener('click',()=>trans());
+        function trans(){
+            let box = document.querySelector('.trans');
+            if(!toggle){
+                box.classList.add('active');
+                
+            }else{
+                box.classList.remove('active');
+            }
+            toggle=!toggle;
+        }
+    </script>
+</body>
+</html>

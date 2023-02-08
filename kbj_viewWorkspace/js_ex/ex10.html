@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 class="title"> 유저 검색 </h1>
+    <input type="text" class="input_userId">
+    <p class="res"></p>
+    <script>
+        const userDataList=[
+            {id: 1001, name:'홍길동'},
+            {id: 1002, name:'유재석'},
+            {id: 1003, name:'하하'},
+            {id: 1004, name:'노홍철'},
+            {id: 1005, name:'길'},
+        ]
+
+        const input = document.querySelector("input");
+        const p = document.querySelector("p");
+        // 문자가 입력 받을때마다 체크 
+        input.addEventListener('keyup',()=>{
+            if(event.key==='Enter'){      
+                findUser2(event.target.value);
+            }
+        })
+
+        function findUser(val){
+                let isValidId = false;
+                for(let i =0; i < userDataList.length;i++){
+                    if(val == userDataList[i].id){
+                        isValidId = true;
+                        val = userDataList[i].name;
+                        break;
+                    }
+                }
+                if(isValidId){
+                    addText(val);
+                }else{
+                    addText("존재하지않는 회원");
+                }
+        }
+        function findUser2(val){
+            val = parseInt(val);
+            // 찾은 객체를 반환 
+            const res = userDataList.find((obj)=> obj.id === val);
+            
+            if(!!res === false){
+                addText("존재하지않는 회원");
+            }else{
+                addText(res.name);
+            }
+        }
+
+        function addText(text){
+            p.innerHTML=text;
+        }
+    </script>
+</body>
+</html>

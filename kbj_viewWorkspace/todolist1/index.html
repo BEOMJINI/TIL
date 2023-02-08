@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>to-do list</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- defer : body 요소들이 다 업로드 된 다음에 script 실행하라 -->
+    <script src="index.js" defer></script>
+    <script src="https://kit.fontawesome.com/3f5ea909eb.js" defer crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header class="header"> shopping list</header>
+        <ul class="items">
+            <!-- 추가버튼 누를때마다 추가되는 item_row -->
+            <li class="item_row">
+                <div class="item">
+                    <span class="item_name"> 우유 </span>
+                    <button class="item_delete">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </button>
+                </div>
+            </li>
+            <!--  -->
+            <li class="item_row">
+                <div class="item">
+                    <span class="item_name"> 계란 </span>
+                    <button class="item_delete">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </button>
+                </div>
+            </li>
+
+        </ul>
+        <footer class="footer">
+            <input type="text" class="footer_input">
+            <button class="footer_btn"> 추가 </button>
+        </footer>
+    </div>
+
+</body>
+
+</html>

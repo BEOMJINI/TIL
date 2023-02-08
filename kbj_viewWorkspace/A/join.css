@@ -1,0 +1,110 @@
+:root{
+    --main-color: rgb(232,232,34);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* 전체영역 설정하는 방법*/
+html,
+body {
+    height: 100%;
+    /* width는 디폴트값이 100 이라 안써도 된다. */
+}
+
+.wrap {
+    /* px -> 절대값 , % -> 상대값(바로 앞의 부모 태그의) */
+    height: 100%;
+    /* 그래서 이게 위에 html 설정해도 상속이 안되서 또 적어줘야함*/
+    /* background: lightskyblue; */
+    display: flex;
+    /* flex-direction: row; */
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.container {
+    /* background-color: lightgray; */
+    height: 50%;
+    /* %->상대값이니까 , 바로 앞의 부모태그 .wrap의 상대값만큼 변화 */
+    width: 80%;
+    border-radius: 20px;
+    box-shadow: 0 0px 7px 7px rgb(219, 173, 219);
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    flex-wrap: wrap;
+
+}
+
+.content {
+    /* background-color: rgb(235, 214, 234); */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.content_header{
+    font-size: 11px ;
+    color: rgb(151, 74, 151);
+    align-self: flex-start;
+    margin-bottom: 10px;
+}
+
+.content_body{
+    height: 80%;
+    /* background-color: antiquewhite; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.content_row{
+    width: 100%;
+    height: 100px;
+}
+
+.content_title{
+    font-size: 0.7em;
+    color: gray;
+    text-align: left;
+}
+
+input[type="text"]{
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-bottom: 1px solid gray;
+}
+input[type="text"]:hover{
+    border-bottom: 1px solid rgb(151, 74, 151);
+}
+/* .content_row:nth-child(5){
+    height: 500px;
+} */
+
+span{
+    font-size: 8px;
+}
+
+.gender{
+    height: 60px;
+}
+
+.content_footer{
+    width: 80%;
+    background-color: black;
+}
+
+button{
+    height: 75px;
+    width: 100%;
+    display: block;
+}

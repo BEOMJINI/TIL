@@ -1,0 +1,90 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    background-color: gray;
+    display: flex;
+    flex-direction: column;
+    padding: 50px 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.content{
+    background-color: white;
+    width: 620px;
+    padding: 40px;
+    border: 1px solid aqua;
+    border-radius: 18px;
+}
+
+.content__head{
+    /* background-color: pink; */
+    margin-bottom: 20px;
+    border-bottom: 1px dashed gray;
+    padding-bottom: 20px;
+}
+
+.haed__title{
+    background-color: orange;
+    color:white;
+    padding: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: 400;
+}
+
+.head__sub-title{
+    font-size: 18px;
+
+}
+
+.point{
+    color: orange;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: underline;
+    display: block;
+    margin-top: 10px;
+
+}
+
+.content__body{
+    /* background-color: azure; */
+    padding: 30px 10px;
+    border: 1px solid lightpink;
+}
+
+.body__title{
+    font-size: 22px;
+    font-weight: 600;
+    background-color: lightcoral;
+    padding: 7px 0 7px 20px;
+    margin-bottom: 10px;
+}
+
+.kimchi{
+    color: red;
+    font-weight: bold;
+}
+
+.egg{
+    color: yellow;
+    font-weight: bold;
+}
+
+.highlight{
+    color: blue;
+    font-weight: bolder;
+    font-style: italic;
+    font-size: 20px;
+}
+
+.content-date{
+    color: gray;
+    font-size: 13px;
+    text-align: right;
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 50px;
+            height: 50px;
+            background-color: lightgray;
+            border: 1px solid gray;
+            margin-bottom: 10px;
+        }
+
+        .list {
+            display: flex;
+            column-gap: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 박스 만들기  -->
+    <div class="list">
+        <!-- <div class="box"></div> -->
+    </div>
+    <button class="addBtn"> 추가 버튼 </button>
+    <button class="delBtn"> 삭제 버튼 </button>
+    <script>
+        // function addEvent(){
+        //     //현재 html 문서 안에 있는 box를 전부 가져와 => 배열 
+        //     document.querySelectorAll(".box").forEach(
+        //         // 그배열에 있는 box : div 객체 각각 클릭 이벤트 리스너 추가
+        //         box =>{ box.addEventListener("click", (event)=>{
+        //             console.log("test=", event.currentTarget.value);
+        //             //event.stopPropagation(); // 안씀 
+        //             alert("클릭");
+        //         })}
+        //     );
+        // }
+
+
+        const list = document.querySelector(".list");
+        const btnAll = document.querySelectorAll("button");
+        const addBtn = btnAll[0];
+        const delBtn = btnAll[1];
+        let boxs = document.querySelectorAll(".box");
+        //const addBtn = document.querySelector(".addBtn");
+        //const delBtn = document.querySelector(".delBtn");
+        let cnt = 1;
+        addBtn.addEventListener("click", e => {
+            let box = document.createElement("div"); // <div></div>
+            box.classList.add("box");// <div class="box"></div>
+            box.innerHTML = `${cnt}`;
+            box.value = `${cnt}`;
+            list.appendChild(box); // <list><div class="box"></div></list>
+            boxs = document.querySelectorAll(".box");
+            addEvent();
+            cnt++;
+        })
+        delBtn.addEventListener("click", e => {
+            let box = e.currentTarget; // button 객체
+            list.removeChild(boxs[boxs.length - 1]);
+            boxs = document.querySelectorAll(".box");
+        })
+
+        // 이벤트 위임 : box 자식이 클릭 이벤트를 하는 것이 아니라
+        // 부모가 자식 이벤트를 발동시킴 
+        list.addEventListener("click", e => {
+            if (e.target.classList.contains("box")) {
+                alert("클릭");
+            }
+        })
+
+
+    </script>
+</body>
+
+</html>
