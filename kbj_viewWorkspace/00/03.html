@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        table {
+            height: 200px;
+            width: 200px;
+            margin: 20px;
+            border: 1px solid black;
+        }
+
+        tr {
+            height: 33%;
+        }
+
+        td {
+            height: 30px;
+            width: 30px;
+            border: 1px solid black;
+            text-align: center;
+        }
+
+        #hide {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title">
+        <button class="start">
+            게임 시작
+        </button>
+    </div>
+
+    <div class="main">
+        <!-- <table>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table> -->
+    </div>
+
+    <div class="end">
+        <p></p>
+        <button class="reStart">게임 다시 시작</button>
+    </div>
+
+    <script>
+        let turn = false;
+        let cnt = 0;
+        let tds = [...document.querySelectorAll('td')];
+        let temp = [];
+        let win = 0;
+
+        tds.forEach((td, index) => {
+            td.addEventListener('click', () => {
+                if (cnt == 9) {
+                    alert('칸없음');
+                    return;
+                }
+                if (td.innerText.trim().length == 0) {
+                    if (turn == false) {
+                        td.innerText = "O";
+                    } else if (turn == true) {
+                        td.innerText = "X";
+                    }
+                    cnt++;
+                    turn = !turn;
+                } else {
+                    alert('이미선택');
+                }
+                // console.log(index);
+                // console.log(td.innerText);
+                // temp[index] = td.innerText;
+                // console.log(temp);
+                isWin(temp);
+                if (win != 0) {
+                    let text = win == 1 ? 'O 승리' : 'X 승리';
+                    setTimeout(() => {
+                        alert(text);
+                    }, 300);
+                    return;
+                }
+            });
+        });
+        function isWin(temp) {
+            // for (let i = 0; i < temp.length; i++) {
+            //     if (temp[i] == 'O') {
+            //         alert('test');
+            //     }
+            // }
+            if (temp[0] == 'O' && temp[4] == 'O' && temp[8] == 'O') {
+                win = 1;
+            }
+            if (temp[0] == 'X' && game[4] == 'X' && temp[8] == 'X') {
+                win = 2;
+            }
+            if (temp[2] == 'O' && temp[4] == 'O' && temp[6] == 'O') {
+                win = 1;
+            }
+            if (temp[2] == 'X' && temp[4] == 'X' && temp[6] == 'X') {
+                win = 2;
+            }
+            for (let i = 0; i < temp.length; i += 3) {
+                if (temp[i] == 'O' && temp[i + 1] == 'O' && temp[i + 2] == 'O') {
+                    win = 1;
+                }
+                if (temp[i] == 'X' && temp[i + 1] == 'X' && temp[i + 2] == 'X') {
+                    win = 2;
+                }
+            }
+            for (let i = 0; i < 3; i++) {
+                if (temp[i] == 'O' && temp[i + 3] == 'O' && temp[i + 6] == 'O') {
+                    win = 1;
+                }
+                if (temp[i] == 'X' && temp[i + 3] == 'X' && temp[i + 6] == 'X') {
+                    win = 2;
+                }
+            }
+        }
+
+        let main = document.querySelector('.main');
+        let start = document.querySelector('.start');
+        start.addEventListener('click', () => {
+            start.setAttribute('id', 'hide');
+            let table = document.createElement('table');
+            let tr = document.createElement('tr');
+            let td = document.createElement('td');
+
+            main.appendChild(table);
+            table.appendChild(tr);
+            tr.appendChild(td);
+        })
+
+
+
+
+    </script>
+</body>
+
+</html>

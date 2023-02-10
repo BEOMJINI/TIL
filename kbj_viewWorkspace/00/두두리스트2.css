@@ -1,0 +1,158 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100vh;
+}
+
+/*  */
+header {
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 5px solid lightgray;
+    margin-bottom: 30px;
+}
+
+/*  */
+section {
+    height: 80%;
+    display: grid;
+    grid-template-columns: 7fr 3fr;
+    padding: 0 30px 0 30px;
+}
+
+#list {
+    overflow: auto;
+    margin: 30px 0 0 0;
+    padding: 0 60px 0 0;
+}
+
+#list::-webkit-scrollbar {
+    display: none;
+}
+
+.item {
+    height: 30%;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 3px 3px 3px 0 lightgray;
+    margin: 0 0 10px 0;
+}
+
+h4 {
+    font-size: 40px;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+}
+
+span {
+    font-size: 20px;
+    color: lightgray;
+}
+
+#menu {
+    height: 100%;
+}
+
+#addForm {
+    height: 50%;
+    width: 100%;
+}
+
+.form-group {
+    height: 30%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 8fr;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -15px;
+}
+
+label {
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+input {
+    height: 50%;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    font-size: 20px;
+    color: lightgray;
+    text-indent: 1em;
+}
+
+textarea {
+    height: 40%;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    font-size: 20px;
+    color: lightgray;
+    text-indent: 1em;
+    padding: 20px 10px 20px 10px;
+}
+
+button {
+    height: 10%;
+    width: 100%;
+    margin: 10px 0 13px 0;
+}
+
+#garbage {
+    height: 40%;
+    width: 100%;
+    border: 1px solid lightgray;
+    font-size: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*  */
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.msg-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+p {
+    background-color: lightskyblue;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 5px;
+    height: 70px;
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* display: none; */
+    transition: all linear 1s;
+    transform: translateY(0px);
+
+    opacity: 0;
+}
+
+.active {
+    transform: translateY(-300px);
+    opacity: 2;
+}
