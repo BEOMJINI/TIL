@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* body{
+            background-image: url(./레스토랑배경.jpg);
+        } */
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+
+    #container {
+      width: 100%;
+      height: 100%;
+    }
+
+    #canvas {
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+
+    #gameStart {
+      background-color: antiquewhite;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      font-size: 30px;
+      font-weight: bold;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      text-align: center;
+    }
+
+    #gameStart span {
+      font-size: 50px;
+      width: 400px;
+      height: 100px;
+    }
+
+    #startButton {
+      width: 400px;
+      height: 100px;
+      background-color: pink;
+      line-height: 100px;
+    }
+
+    #startButton:hover {
+      background-color: rgb(216, 160, 169);
+    }
+
+    #gameEnd {
+      background-color: antiquewhite;
+      width: 100%;
+      height: 100%;
+      display: none;
+      font-size: 30px;
+      font-weight: bold;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      text-align: center;
+    }
+
+    #gameEnd span {
+      font-size: 50px;
+      width: 400px;
+      height: 100px;
+    }
+
+    #result {
+      bottom: 150px;
+      width: 400px;
+      height: 100px;
+      background-color: pink;
+      /* line-height: 200px; */
+    }
+
+    #reTry {
+      top: 150px;
+      width: 400px;
+      height: 100px;
+      line-height: 100px;
+      background-color: pink;
+    }
+
+    #reTry:hover {
+      background-color: rgb(216, 160, 169);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <canvas id="canvas" width="1800" height="900"></canvas>
+    <div id="gameStart">
+      <span>요리만들기</span>
+      <div id="startButton">게임 시작</div>
+    </div>
+    <div id="gameEnd">
+      <span>게임 종료</span>
+      <div id="result"></div>
+      <div id="reTry">다시하기</div>
+    </div>
+  </div>
+  <script>
+    const startButton = document.querySelector("#startButton");
+    const result = document.querySelector("#result");
+    const gameStart = document.querySelector("#gameStart");
+    const canvas = document.querySelector("#canvas");
+    const ctx = canvas.getContext("2d");
+    const menuIntroduce = document.querySelector("#menuIntroduce");
+    const gameEnd = document.querySelector("#gameEnd");
+    const reTry = document.querySelector("#reTry");
+    let keyDown = {}; //키입력값이 들어가는 배열
+    let objectList = []; //사물 및 지형이미지가 들어가는 배열
+    let backgroundList = []; //배경이미지가 들어가는 배열
+    let menuList = []; //메뉴이미지가 들어가는 배열
+    let npcList = []; //배달해야하는 집들의 이미지가 들어가는 배열
+    let combinationTable = []; //조합테이블 이미지가 들어가는 배열
+    let nowHolding = []; //현재 들고있는 이미지
+    let int1 = []; //첫번째 조합테이블에 들어가 있는 메뉴
+    let int2 = []; //두번째 조합테이블에 들어가 있는 메뉴
+    let int3 = []; //세번째 조합테이블에 들어가 있는 메뉴
+    let isRecipe = false; //조합식이 맞는지 아닌지 판별
+    let setComb = false; //만들어진 세트메뉴를 로딩처리했는지 판별
+    let missionList = []; //미션이 들어가있는 배열
+    let ranNum = getRandomNum();
+    let ranNum1 = getRandomNum();
+
+    let time = ""; //로딩처리시 증가하는 값 이것으로 게이지 %를 나타내줌
+    let loadingBar = ""; //로딩처리시  하얀배경 생성
+    let score = 0; //미션성공시 올라가는 점수
+    let leftTime = 100; //게임종료까지 남은 시간
+    let nowTime = 30; //현재 만들어야 하는 메뉴의 제한시간
+    let gameOver = false; //게임종료가 되었는가 판별
+    let gameSet = false; //게임을 나갔는가 판별
+    let missionTrue = false; //만들어진 메뉴가 미션에서 요구하는 메뉴와 일치하는지 판별
+
+    addEventListener("keydown", (e) => {
+      keyDown[e.keyCode] = true;
+    });
+
+    addEventListener("keyup", (e) => {
+      keyDown[e.keyCode] = false;
+    });
+    startButton.addEventListener("click", () => {
+      init();
+      player.playerReset();
+    });
+    reTry.addEventListener("click", () => {
+      gameEnd.style.display = "none";
+      gameStart.style.display = "flex";
+      score = 0;
+
+      ranNum = getRandomNum();
+      ranNum1 = getRandomNum();
+      gameOver = false;
+    });
+    function init() {
+      gameStart.style.display = "none";
+      canvas.style.display = "block";
+      nowTime = 30;
+      leftTime = 100;
+    }
+    class Mission {
+      constructor(msg, main, side, recipeMsg) {
+        this.msg = msg;
+        this.main = main;
+        this.side = side;
+        this.recipeMsg = recipeMsg;
+      }
+    }
+
+    class Player {
+      constructor() {
+        this.x = 200;
+        this.y = 0;
+        this.size = 50;
+        this.speed = 5;
+        this.playerImg = new Image();
+        this.playerImg.src = "./player.png";
+        this.food = null;
+
+        this.combinationFirstTable = null;
+        this.combinationSecondTable = null;
+        this.combinationThirdTable1 = null;
+        this.combinationThirdTable2 = null;
+        this.plate = new Image();
+        this.plate.src = "./접시.png";
+      }
+      playerReset() {
+        this.x = 200;
+        this.y = 0;
+      }
+
+      movePlayer() {
+        let px = this.x;
+        let py = this.y;
+
+        if (keyDown[37]) {
+          this.x -= this.speed;
+        }
+        if (keyDown[39]) {
+          this.x += this.speed;
+        }
+        if (keyDown[38]) {
+          this.y -= this.speed;
+        }
+        if (keyDown[40]) {
+          this.y += this.speed;
+        }
+
+        let maxX = canvas.width - this.size;
+        let maxY = canvas.height - this.size;
+        if (this.x <= 0) this.x = 0;
+        if (this.x >= maxX) this.x = maxX;
+        if (this.y <= 0) this.y = 0;
+        if (this.y >= maxY) this.y = maxY;
+
+        let isCrash = false;
+
+        objectList.forEach((obj) => {
+          if (this.collision(obj)) {
+            isCrash = true;
+            if (obj.type == "monster") {
+              setComb = false;
+            }
+            return false;
+          }
+        });
+        menuList.forEach((obj) => {
+          if (this.collision(obj)) {
+            isCrash = true;
+
+            if (keyDown[32] && !setComb) {
+              time++;
+              console.log(time);
+              loadingBar = 240;
+              if (time == 100) {
+                if (nowHolding.length != 0) {
+                  nowHolding = [];
+                }
+                nowHolding.push(obj);
+                if (obj.type == "menu") {
+                  if (obj.name == missionList[ranNum].main) {
+                    missionTrue = true;
+                  } else {
+                    missionTrue = false;
+                  }
+                }
+                this.food = new Image();
+                this.food.src = obj.shape.src;
+              }
+            }
+            if (!keyDown[32]) {
+              time = 0;
+              loadingBar = 0;
+            }
+
+            return false;
+          }
+        });
+
+        npcList.forEach((obj) => {
+          if (this.collision(obj)) {
+            isCrash = true;
+            if (setComb && keyDown[32]) {
+              time++;
+              loadingBar = 240;
+              if (time == 100) {
+                if (obj.name == ranNum1 && missionTrue == true) {
+                  this.missionSuccess(500);
+                } else {
+                  this.missionFail();
+                }
+              }
+            }
+            if (!keyDown[32]) {
+              time = 0;
+              loadingBar = 0;
+            }
+            return false;
+          }
+        });
+        combinationTable.forEach((obj) => {
+          if (this.collision(obj)) {
+            isCrash = true;
+            if (keyDown[32]) {
+              if (this.food !== null) {
+                time++;
+
+                loadingBar = 240;
+                if (this.x < obj.x + obj.width / 3) {
+                  if (time == 100) {
+                    if (nowHolding[0].type == "menu") {
+                      this.combinationFirstTable = new Image();
+                      this.combinationFirstTable.src = this.food.src;
+
+                      int1 = nowHolding;
+                      this.food = null;
+                    }
+                  }
+                } else if (
+                  this.x >= obj.x + obj.width / 3 &&
+                  this.x < obj.x + obj.width / 2
+                ) {
+                  if (time == 100) {
+                    if (nowHolding[0].type == "sideMenu") {
+                      this.combinationSecondTable = new Image();
+                      this.combinationSecondTable.src = this.food.src;
+                      int2 = nowHolding;
+                      this.food = null;
+                    }
+                  }
+                }
+              } else {
+                if (this.x >= obj.x + obj.width / 2) {
+                  if (int3.length != 0) {
+                    time++;
+                    loadingBar = 240;
+                    if (time == 100) {
+                      setComb = true;
+                    }
+                  }
+                }
+              }
+            }
+            if (!keyDown[32]) {
+              time = 0;
+              loadingBar = 0;
+            }
+            return false;
+          }
+        });
+
+        if (isCrash) {
+          this.x = px;
+          this.y = py;
+        }
+      }
+      missionSuccess(point) {
+        score += point;
+        int1 = [];
+        int2 = [];
+        int3 = [];
+        this.combinationFirstTable = null;
+        this.combinationSecondTable = null;
+        this.combinationThirdTable1 = null;
+        this.combinationThirdTable2 = null;
+        isRecipe = false;
+        setComb = false;
+        nowTime = 30;
+        ranNum = getRandomNum();
+        ranNum1 = getRandomNum();
+      }
+      missionFail() {
+        int1 = [];
+        int2 = [];
+        int3 = [];
+        this.combinationFirstTable = null;
+        this.combinationSecondTable = null;
+        this.combinationThirdTable1 = null;
+        this.combinationThirdTable2 = null;
+        isRecipe = false;
+        setComb = false;
+      }
+      inRect(obj, px, py) {
+        if (
+          obj.x < px &&
+          px < obj.x + obj.width &&
+          obj.y < py &&
+          py < obj.y + obj.height
+        ) {
+          return true;
+        } else {
+          false;
+        }
+      }
+
+      collision(obj) {
+        if (this.inRect(obj, this.x, this.y)) return true;
+        // player의 오른쪽 상단 모서리가 닿으면
+        else if (this.inRect(obj, this.x + this.size, this.y)) return true;
+        // player의 왼쪽 하단 모서리가 닿으면
+        else if (this.inRect(obj, this.x, this.y + this.size)) return true;
+        // player의 오른쪽 하단 모서리가 닿으면
+        else if (this.inRect(obj, this.x + this.size, this.y + this.size))
+          return true;
+        else return false;
+      }
+
+      checkRecipe() {
+        if (int1[0].name == "도넛" && int2[0].name == "커피") {
+          isRecipe = true;
+        } else if (int1[0].name == "자장면" && int2[0].name == "단무지") {
+          isRecipe = true;
+        } else if (int1[0].name == "삼겹살" && int2[0].name == "소주") {
+          isRecipe = true;
+        } else if (int1[0].name == "햄버거" && int2[0].name == "콜라") {
+          isRecipe = true;
+        } else {
+          isRecipe = false;
+        }
+      }
+
+      render(ctx) {
+        this.movePlayer();
+
+        ctx.drawImage(
+          this.plate,
+          combinationTable[0].x + 20,
+          combinationTable[0].y - 50,
+          100,
+          100
+        );
+        ctx.drawImage(
+          this.plate,
+          combinationTable[0].x + combinationTable[0].width / 3 + 10,
+          combinationTable[0].y - 50,
+          100,
+          100
+        );
+        ctx.drawImage(
+          this.plate,
+          combinationTable[0].x + (combinationTable[0].width / 3) * 2 + 10,
+          combinationTable[0].y - 50,
+          150,
+          100
+        );
+        if (this.food !== null) {
+          ctx.drawImage(
+            this.food,
+            this.x,
+            this.y - this.size,
+            this.size,
+            this.size
+          );
+        }
+        if (setComb) {
+          ctx.drawImage(
+            this.combinationFirstTable,
+            this.x - this.size * 0.5,
+            this.y - this.size,
+            this.size,
+            this.size
+          );
+          ctx.drawImage(
+            this.combinationSecondTable,
+            this.x + this.size * 0.5,
+            this.y - this.size,
+            this.size,
+            this.size
+          );
+        }
+        if (this.combinationFirstTable !== null && int1.length != 0) {
+          ctx.drawImage(
+            this.combinationFirstTable,
+            combinationTable[0].x + 20,
+            combinationTable[0].y - 50,
+            100,
+            100
+          );
+        }
+        if (this.combinationSecondTable !== null && int2.length != 0) {
+          ctx.drawImage(
+            this.combinationSecondTable,
+            combinationTable[0].x + combinationTable[0].width / 3 + 10,
+            combinationTable[0].y - 50,
+            100,
+            100
+          );
+        }
+
+        if (int1.length != 0 && int2.length != 0) {
+          this.checkRecipe();
+          if (isRecipe) {
+            this.combinationThirdTable1 = new Image();
+            this.combinationThirdTable1.src = this.combinationFirstTable.src;
+
+            ctx.drawImage(
+              this.combinationThirdTable1,
+              combinationTable[0].x + (combinationTable[0].width / 3) * 2,
+              combinationTable[0].y - 50,
+              75,
+              75
+            );
+            int3[0] = int1[0];
+            this.combinationThirdTable2 = new Image();
+            this.combinationThirdTable2.src = this.combinationSecondTable.src;
+            ctx.drawImage(
+              this.combinationThirdTable2,
+              combinationTable[0].x +
+              (combinationTable[0].width / 3) * 2 +
+              76,
+              combinationTable[0].y - 50,
+              75,
+              75
+            );
+            int3[1] = int2[0];
+          } else {
+            int3 = [];
+          }
+        }
+
+        ctx.drawImage(this.playerImg, this.x, this.y, this.size, this.size);
+      }
+      // init() {
+      //   this.x = 200;
+      //   this.y = 0;
+      //   this.size = 50;
+      //   this.speed = 5;
+      //   this.playerImg = new Image();
+      //   this.playerImg.src = "./player.png";
+      //   this.food = null;
+
+      //   this.combinationFirstTable = null;
+      //   this.combinationSecondTable = null;
+      //   this.combinationThirdTable1 = null;
+      //   this.combinationThirdTable2 = null;
+      // }
+    }
+
+    class Object {
+      constructor(shape, x, y, width, height, type, name) {
+        this.shape = shape;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.type = type;
+        this.name = name;
+        this.reverse = false;
+      }
+
+      getRandNum1() {
+        let a = Math.floor(Math.random() * 9) + 1;
+
+        return a;
+      }
+
+      render(ctx) {
+        if (this.shape instanceof Image) {
+          if (this.type == "monster") {
+            for (let i = 1; i <= 5; i++) {
+              if (this.name == i) {
+                if (this.y == 0 || this.y == 900) {
+                  this.x += this.getRandNum1() * 50;
+                }
+                if (this.reverse == false) {
+                  ctx.drawImage(
+                    this.shape,
+                    this.x,
+                    (this.y += 2),
+                    this.width,
+                    this.height
+                  );
+                  if (this.y >= 900) {
+                    this.x = 1300;
+                    this.y = 900;
+                    this.reverse = true;
+                  }
+                } else {
+                  ctx.drawImage(
+                    this.shape,
+                    this.x,
+                    (this.y -= 2),
+                    this.width,
+                    this.height
+                  );
+                  if (this.y <= 0) {
+                    this.x = 1300;
+                    this.y = 0;
+                    this.reverse = false;
+                  }
+                }
+              }
+            }
+          } else {
+            let missionBallon = new Image();
+            missionBallon.src = "./말풍선.png";
+            ctx.drawImage(
+              missionBallon,
+              npcList[ranNum1].x - 150,
+              npcList[ranNum1].y,
+              150,
+              75
+            );
+            ctx.font = "15px verdana";
+            if (missionList[ranNum].main == "자장면") {
+              ctx.fillText(
+                "자장면 주세요 ",
+                npcList[ranNum1].x - 120,
+                npcList[ranNum1].y + 30
+              );
+              ctx.fillText(
+                "배고파요! ",
+                npcList[ranNum1].x - 120,
+                npcList[ranNum1].y + 50
+              );
+            } else if (missionList[ranNum].main == "햄버거") {
+              ctx.fillText(
+                "햄버거 주세요 ",
+                npcList[ranNum1].x - 120,
+                npcList[ranNum1].y + 30
+              );
+              ctx.fillText(
+                "배고파요! ",
+                npcList[ranNum1].x - 120,
+                npcList[ranNum1].y + 50
+              );
+            } else if (missionList[ranNum].main == "도넛") {
+              ctx.fillText(
+                "도넛 주세요 ",
+                npcList[ranNum1].x - 120,
+                npcList[ranNum1].y + 30
+              );
+              ctx.fillText(
+                "배고파요! ",
+                npcList[ranNum1].x - 120,
+                npcList[ranNum1].y + 50
+              );
+            } else if (missionList[ranNum].main == "삼겹살") {
+              ctx.fillText(
+                "삼겹살주세요 ",
+                npcList[ranNum1].x - 120,
+                npcList[ranNum1].y + 30
+              );
+              ctx.fillText(
+                "배고파요! ",
+                npcList[ranNum1].x - 120,
+                npcList[ranNum1].y + 50
+              );
+            }
+            ctx.font = "30px verdana";
+            if (this.type == "menu" || this.type == "sideMenu") {
+              ctx.drawImage(
+                player.plate,
+                this.x,
+                this.y,
+                this.width,
+                this.height
+              );
+            }
+            ctx.drawImage(
+              this.shape,
+              this.x,
+              this.y,
+              this.width,
+              this.height
+            );
+          }
+        }
+      }
+    }
+
+    let player = new Player();
+
+    function add() {
+      let image1 = new Image();
+      image1.src = "./레스토랑배경.png";
+      backgroundList.push(
+        new Object(image1, 0, 0, 1200, 1000, "background", "background1")
+      );
+      let image2 = new Image();
+      image2.src = "./도로.png";
+      backgroundList.push(
+        new Object(image2, 1200, 0, 600, 1000, "background", "background2")
+      );
+      let image3 = new Image();
+      image3.src = "./문.png";
+      backgroundList.push(
+        new Object(image3, 1200, 300, 100, 300, "door", "door")
+      );
+
+      let image4 = new Image();
+      image4.src = "./donut.png";
+      menuList.push(new Object(image4, 0, 0, 75, 75, "menu", "도넛"));
+      let image5 = new Image();
+      image5.src = "./자장면.png";
+      menuList.push(new Object(image5, 0, 200, 75, 75, "menu", "자장면"));
+      let image6 = new Image();
+      image6.src = "./삼겹살.png";
+      menuList.push(new Object(image6, 0, 400, 75, 75, "menu", "삼겹살"));
+      let image7 = new Image();
+      image7.src = "./햄버거.png";
+      menuList.push(new Object(image7, 0, 600, 75, 75, "menu", "햄버거"));
+      let image8 = new Image();
+      image8.src = "./소주.png";
+      menuList.push(new Object(image8, 500, 0, 75, 75, "sideMenu", "소주"));
+      let image9 = new Image();
+      image9.src = "./커피.png";
+      menuList.push(new Object(image9, 500, 200, 75, 75, "sideMenu", "커피"));
+      let image10 = new Image();
+      image10.src = "./콜라.png";
+      menuList.push(
+        new Object(image10, 500, 400, 75, 75, "sideMenu", "콜라")
+      );
+      let image11 = new Image();
+      image11.src = "./단무지.png";
+      menuList.push(
+        new Object(image11, 500, 600, 75, 75, "sideMenu", "단무지")
+      );
+      let image12 = new Image();
+      image12.src = "./조합테이블.png";
+      combinationTable.push(
+        new Object(image12, 650, 750, 480, 150, "object", "combinationTable")
+      );
+      let image13 = new Image();
+      image13.src = "./집1.png";
+      npcList.push(new Object(image13, 1700, 0, 100, 100, "npc", 0));
+      let image14 = new Image();
+      image14.src = "./집2.png";
+      npcList.push(new Object(image14, 1700, 200, 100, 100, "npc", 1));
+      let image15 = new Image();
+      image15.src = "./집3.png";
+      npcList.push(new Object(image15, 1700, 400, 100, 100, "npc", 2));
+      let image16 = new Image();
+      image16.src = "./집4.png";
+      npcList.push(new Object(image16, 1700, 600, 100, 100, "npc", 3));
+      let image17 = new Image();
+      image17.src = "./벽돌.png";
+      objectList.push(
+        new Object(image17, 1200, 0, 100, 300, "object", "wall1")
+      );
+      let image18 = new Image();
+      image18.src = "./벽돌.png";
+      objectList.push(
+        new Object(image18, 1200, 600, 100, 300, "object", "wall2")
+      );
+      let image19 = new Image();
+      image19.src = "./몬스터1.png";
+
+      objectList.push(new Object(image19, 1300, 0, 50, 50, "monster", 1));
+      let image20 = new Image();
+      image20.src = "./몬스터2.png";
+
+      objectList.push(new Object(image20, 1300, 0, 50, 50, "monster", 2));
+      let image21 = new Image();
+      image21.src = "./몬스터3.png";
+
+      objectList.push(new Object(image21, 1300, 0, 50, 50, "monster", 3));
+      let image22 = new Image();
+      image22.src = "./몬스터4.png";
+
+      objectList.push(new Object(image22, 1300, 0, 50, 50, "monster", 4));
+      let image23 = new Image();
+      image23.src = "./몬스터5.png";
+      objectList.push(new Object(image23, 1300, 0, 50, 50, "monster", 5));
+      objectList.push(new Object("rain1", 1300, 0, 10, 100, false, false));
+      objectList.push(new Object("rain2", 1300, 0, 10, 100, false, false));
+      objectList.push(new Object("rain3", 1300, 0, 10, 100, false, false));
+      missionList.push(
+        new Mission(
+          "햄버거세트 주문이 들어왔습니다",
+          "햄버거",
+          "콜라",
+          "레시피: 햄버거+콜라"
+        )
+      );
+      missionList.push(
+        new Mission(
+          "자장면 주문이 들어왔습니다",
+          "자장면",
+          "단무지",
+          "레시피: 자장면+단무지"
+        )
+      );
+      missionList.push(
+        new Mission(
+          "도넛세트 주문이 들어왔습니다",
+          "도넛",
+          "커피",
+          "레시피: 도넛+커피"
+        )
+      );
+      missionList.push(
+        new Mission(
+          "삼겹살세트 주문이 들어왔습니다",
+          "삼겹살",
+          "소주",
+          "레시피: 삼겹살+소주"
+        )
+      );
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.globalAlpha = 0.5;
+      backgroundList.forEach((e) => {
+        e.render(ctx);
+      });
+      ctx.globalAlpha = 1.0;
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 800, 200, 100);
+      ctx.fillStyle = "black";
+      ctx.fontWeight = "bold";
+      ctx.fillText("나가기", 50, 850);
+      objectList.forEach((e) => {
+        e.render(ctx);
+      });
+
+      menuList.forEach((e) => {
+        e.render(ctx);
+      });
+      npcList.forEach((e) => {
+        e.render(ctx);
+      });
+      combinationTable.forEach((e) => {
+        e.render(ctx);
+      });
+
+      if (time <= 100 && time >= 1 && keyDown[32] == true) {
+        ctx.font = "30px verdana";
+        ctx.fillStyle = "black";
+        ctx.fontWeight = "bold";
+        ctx.fillText("로딩중..." + time + "%", 900, 450);
+        ctx.fillStyle = "white";
+        ctx.fillRect(890, 490, loadingBar, 50);
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(900, 500, time * 2, 30);
+      }
+
+      player.render(ctx);
+      ctx.globalAlpha = 0.5;
+      ctx.fillStyle = "pink";
+      ctx.fillRect(1350, 750, 450, 150);
+      ctx.globalAlpha = 1.0;
+      ctx.font = "20px verdana";
+      ctx.fillStyle = "black";
+      ctx.fontWeight = "bold";
+
+      ctx.fillText(missionList[ranNum].msg, 1350, 790);
+      ctx.fillText(missionList[ranNum].recipeMsg, 1350, 820);
+      ctx.fillText(
+        "현재메뉴 남은시간:" + Math.floor(nowTime) + "초",
+        1350,
+        850
+      );
+      ctx.fillText(
+        "남은시간: " +
+        Math.floor(leftTime / 60) +
+        "분 " +
+        (leftTime % 60) +
+        "초  현재점수: " +
+        score,
+        1350,
+        890
+      );
+    }
+    function getRandomNum() {
+      return Math.floor(Math.random() * 4);
+    }
+    function getTime() {
+      if (!gameOver) {
+        leftTime--;
+        nowTime--;
+        if (nowTime == 0) {
+          int1 = [];
+          int2 = [];
+          int3 = [];
+          this.combinationFirstTable = null;
+          this.combinationSecondTable = null;
+          this.combinationThirdTable1 = null;
+          this.combinationThirdTable2 = null;
+          isRecipe = false;
+          setComb = false;
+          nowTime = 30;
+          ranNum = getRandomNum();
+
+          ranNum1 = getRandomNum();
+        }
+        if (leftTime == 0 || score >= 2000) {
+          gameOver = true;
+        }
+      }
+    }
+    function reset() {
+      int1 = [];
+      int2 = [];
+      int3 = [];
+      this.combinationFirstTable = null;
+      this.combinationSecondTable = null;
+      this.combinationThirdTable1 = null;
+      this.combinationThirdTable2 = null;
+      isRecipe = false;
+      setComb = false;
+      nowTime = 30;
+      ranNum = Math.floor(Math.random() * 4);
+      ranNum1 = Math.floor(Math.random() * 4);
+      player.food = null;
+      if (gameOver) {
+        canvas.style.display = "none";
+        gameEnd.style.display = "flex";
+      }
+      if (gameSet) {
+        canvas.style.display = "none";
+        gameStart.style.display = "flex";
+        gameSet = false;
+      }
+    }
+    function getResult() {
+      if (gameOver) {
+        int1 = [];
+        int2 = [];
+        int3 = [];
+        this.combinationFirstTable = null;
+        this.combinationSecondTable = null;
+        this.combinationThirdTable1 = null;
+        this.combinationThirdTable2 = null;
+
+        isRecipe = false;
+        setComb = false;
+        nowTime = 30;
+        ranNum = getRandomNum();
+        ranNum1 = getRandomNum();
+        canvas.style.display = "none";
+        gameEnd.style.display = "flex";
+        if (leftTime == 0) {
+          result.innerHTML = "타임아웃<br>점수:";
+          result.innerHTML += score;
+        }
+        if (score >= 2000) {
+          result.innerHTML = "게임승리!!<br>점수:";
+          result.innerHTML += score;
+          result.innerHTML += "남은시간: ";
+          result.innerHTML += leftTime;
+          result.innerHTML += " 초";
+        }
+      }
+    }
+    function checkGameOut() {
+      if (player.x <= 200 && player.y >= 800) {
+        gameSet = true;
+        reset();
+      }
+    }
+    add();
+    setInterval(draw, 10);
+    setInterval(getTime, 1000);
+    setInterval(getResult, 1000);
+    setInterval(checkGameOut, 1000);
+  </script>
+</body>
+
+</html>

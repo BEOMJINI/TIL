@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        main {
+            display: flex;
+            flex-direction: row;
+            background-color: rgb(255, 222, 227);
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: flex-start;
+            row-gap: 20px;
+        }
+
+        .team {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 30px;
+
+        }
+
+        img {
+            width: 880px;
+            height: 500px;
+            background-size: cover;
+        }
+
+        p {
+            margin-top: 20px;
+            font-size: 30px;
+        }
+
+        img:hover {
+            transform: scale(1.2);
+            transition: 1s;
+
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+
+        <div class="team">
+            <img src="./img/player.png" alt="White Rabbit">
+            <h2>양재혁</h2>
+            <p>
+                요리 조리부터 배달까지 하는 요리만들기 게임입니다.
+            </p>
+        </div>
+
+        <div class="team">
+            <img src="./img/01.png" alt="Cheshire Cat">
+            <h2>김범진</h2>
+            <p>
+                캔버스 기능을 활용하여 맵이동에 중점을 둔 프로젝트입니다.
+            </p>
+        </div>
+
+
+
+    </main>
+</body>
+
+</html>
