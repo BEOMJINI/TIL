@@ -1,0 +1,55 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+    background-color: beige;
+
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+canvas {
+    width: 1500px;
+    height: 800px;
+
+}
+
+.message {
+    width: calc(1500px / 2);
+    height: calc(800px / 5);
+    /* border: 1px solid black; */
+    /* margin-top: -150px; */
+    margin-left: 10px;
+    font-size: 25px;
+    background-image: url('img/chatBox.png');
+    background-size: 100% 100%;
+    /* text-align: center; */
+    text-indent: 2em;
+    padding-top: 20px;
+    position: absolute;
+    left: 23%;
+    top: 75%;
+    /* bottom: 50px; */
+    /* right: calc(100% - 1000px); */
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    z-index: 1;
+    opacity: 0;
+}
